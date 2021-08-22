@@ -1,0 +1,22 @@
+messages:
+  CreateMessage:
+    - ''
+    - '&8(&a&l+&8) &aAttention! &aNew voting has begun!'
+    - ''
+    - '&7    Vote &a/q yes &7or &a/q no'
+    - '&7    Question: &b%QUESTION%'
+    - ''
+    - '&8(&a&l+&8) &aVoting ends in 1 minute'
+    - ''
+  EndMessage:
+    - ''
+    - '&8(&a&l+&8) &aAttention! &aVoting just ended!'
+    - ''
+    - '&7    Question: &b%QUESTION%'
+    - '&7    Results: &aYes ✔: &b%VOTEDYES% &7- &cNo ✘: &b%VOTEDNO%'
+    - ''
+    - '&8(&a&l+&8) &aThanks for contributing'
+    - ''
+
+votetime: 60 #Time for votnig is in seconds
+actionbar: '&a&lQuestion: &b%QUESTION%       &a&lYes: &b%VOTEDYES% &7&l- &c&lNo: &b%VOTEDNO%'

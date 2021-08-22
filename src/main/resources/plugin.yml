@@ -1,0 +1,8 @@
+name: QuestionPlugin
+version: '${project.version}'
+main: me.lordmefloun.questionplugin.QuestionPlugin
+authors: [ LordMefloun ]
+description: Ask your players questions 
+commands:
+  q:
+    description: Main command for plugin
