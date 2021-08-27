@@ -1,5 +1,8 @@
 package me.lordmefloun.questionplugin;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.logging.log4j.message.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -57,6 +60,7 @@ public final class QuestionPlugin extends JavaPlugin {
                     message = message.replaceAll("%VOTEDNO%", Integer.toString(votedNo.size()));
                     message = message.replaceAll("%VOTEDYES%", Integer.toString(votedYes.size()));
 
+
                     Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
                 }
                 reset();
@@ -80,7 +84,13 @@ public final class QuestionPlugin extends JavaPlugin {
                         message = message.replaceAll("%VOTEDYES%", Integer.toString(votedYes.size()));
 
 
-                        p.sendActionBar(ChatColor.translateAlternateColorCodes('&', message));
+                        try {
+                            p.sendActionBar(ChatColor.translateAlternateColorCodes('&', message));
+                        }
+                        catch (NoSuchMethodError e){
+                            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', message)));
+                        }
+
                     }
                 }
                 else{
@@ -126,7 +136,7 @@ public final class QuestionPlugin extends JavaPlugin {
                             Otazka = createdQuestion;
 
 
-                            p.sendMessage(ChatColor.GREEN + "Your question has been created");
+                            p.sendMessage(MessageFromConfig("questionCreatedMessage"));
                             p.sendMessage("");
                             for (String message : config.getStringList("messages.CreateMessage")){
 
@@ -136,46 +146,46 @@ public final class QuestionPlugin extends JavaPlugin {
                             }
                             runnable();
                         } else {
-                            p.sendMessage(ChatColor.RED + "Question already exists");
+                            p.sendMessage(MessageFromConfig("questionExistsMessage"));
                         }
                     } else {
-                        p.sendMessage(ChatColor.RED + "Write question");
+                        p.sendMessage(MessageFromConfig("questionMissingMessage"));
                     }
                 }
-                else p.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                else p.sendMessage(MessageFromConfig("noPermissionMessage"));
             }
             else if (args[0].equalsIgnoreCase("yes")){
                 if(p.hasPermission("question.vote")) {
                     if (Otazka != null) {
                         if (!(votedYes.contains(p) || votedNo.contains(p))) {
-                            p.sendMessage(ChatColor.GREEN + "Thanks for voting! (yes)");
+                            p.sendMessage(MessageFromConfig("votedYesMessage"));
                             votedYes.add(p);
                         } else {
-                            p.sendMessage(ChatColor.RED + "You've already voted!");
+                            p.sendMessage(MessageFromConfig("alreadyVotedMessage"));
                         }
                     }
                     else {
-                        p.sendMessage(ChatColor.RED + "No question has started yet");
+                        p.sendMessage(MessageFromConfig("noQuestionMessage"));
                     }
                 }
-                else p.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                else p.sendMessage(MessageFromConfig("noPermissionMessage"));
 
             }
             else if (args[0].equalsIgnoreCase("no")){
                 if(p.hasPermission("question.vote")) {
                     if (Otazka != null) {
                         if (!(votedYes.contains(p) || votedNo.contains(p))) {
-                            p.sendMessage(ChatColor.GREEN + "Thanks for voting! (no)");
+                            p.sendMessage(MessageFromConfig("votedNoMessage"));
                             votedNo.add(p);
                         } else {
-                            p.sendMessage(ChatColor.RED + "You've already voted!");
+                            p.sendMessage(MessageFromConfig("alreadyVotedMessage"));
                         }
                     }
                     else {
-                        p.sendMessage(ChatColor.RED + "No question has started yet");
+                        p.sendMessage(MessageFromConfig("noQuestionMessage"));
                     }
                 }
-                else p.sendMessage(ChatColor.RED + "You don't have permission to do that");
+                else p.sendMessage(MessageFromConfig("noPermissionMessage"));
             }
 
 
@@ -191,5 +201,10 @@ public final class QuestionPlugin extends JavaPlugin {
 
 
         return false;
+    }
+
+
+    public String MessageFromConfig(String configpath){
+        return ChatColor.translateAlternateColorCodes('&', getConfig().getString(configpath));
     }
 }

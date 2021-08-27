@@ -20,3 +20,12 @@ messages:
 
 votetime: 60 #Time for votnig is in seconds
 actionbar: '&a&lQuestion: &b%QUESTION%       &a&lYes: &b%VOTEDYES% &7&l- &c&lNo: &b%VOTEDNO%'
+
+noPermissionMessage: '&cYou do not have permission to do that!'
+votedNoMessage: '&aThanks for voting! (NO)'
+votedYesMessage: '&aThanks for voting! (YES)'
+alreadyVotedMessage: '&cYou have already voted!'
+noQuestionMessage: '&cNo question has started yet'
+questionCreatedMessage: '&aYour question has been created'
+questionExistsMessage: '&cQuestion already exists'
+questionMissingMessage: '&cWrite question'
